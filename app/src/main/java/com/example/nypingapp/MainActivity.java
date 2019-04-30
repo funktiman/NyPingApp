@@ -65,32 +65,19 @@ public class MainActivity extends AppCompatActivity {
     //knappen "ping"
     public void onClick(View v){
 
-       Toast.makeText(getApplicationContext(), "Calculating ping to target", Toast.LENGTH_LONG).show();
+      // Toast.makeText(getApplicationContext(), "Calculating ping to target", Toast.LENGTH_LONG).show();
 
        try {
-
             // lagrer fra textboks ipaddressString
             EditText edText = (EditText) findViewById(R.id.editText);
             ipaddressString= edText.getText().toString();
-
             Intent intent = new Intent(this, PingIntentService.class);
-
             intent.putExtra(PING_ID, ipaddressString);
-
             startService(intent);
+            Toast.makeText(getApplicationContext(), "Intent started, sender ipadresse til pingIntendService", Toast.LENGTH_LONG).show();
 
 
-
-            /**
-            //TODO what the fuck? har må vi broadcaste
-            //sends ipadddress to method
-            ping = ping(ipaddressString);
-            pingString=String.valueOf(ping);
-            */
-
-
-
-        }catch (Exception e){
+       }catch (Exception e){
             Toast.makeText(getApplicationContext(), "Error IO"+e, Toast.LENGTH_LONG).show();
         }
     }
@@ -126,7 +113,9 @@ public class MainActivity extends AppCompatActivity {
              pingTextView = (TextView) findViewById(R.id.pingTextView);
 
             if(intent.getAction().equals(PingIntentService.BRODCAST_PING_ID)){
-                double ping = intent.getDoubleExtra(PingIntentService.PING_REPLAY, -1);
+                Toast.makeText(getApplicationContext(), "Broadcast fra PingIntentService, ping adresse", Toast.LENGTH_LONG).show();
+
+                double ping = intent.getDoubleExtra(PingIntentService.PING_REPLY, -1);
                 pingString = String.valueOf(ping) + " ms";
                 pingTextView.setText(pingString);
 

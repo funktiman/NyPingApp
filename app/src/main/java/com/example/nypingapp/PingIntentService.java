@@ -2,7 +2,7 @@ package com.example.nypingapp;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class PingIntentService extends IntentService {
 
 
 
-    public static final String PING_REPLAY = "com.example.nypingapp.pingReplayID";
+    public static final String PING_REPLY = "com.example.nypingapp.pingReplayID";
     public static final String BRODCAST_PING_ID = "com.example.nypingapp.pingBroadcastID";
     public PingIntentService() {
         super("PingIntentService");
@@ -28,10 +28,12 @@ public class PingIntentService extends IntentService {
         String hostAddress = intent.getStringExtra(MainActivity.PING_ID);
 
         try {
-            double pingen = ping(hostAddress);
-            Intent intentReplay = new Intent(BRODCAST_PING_ID);
-            intentReplay.putExtra(PING_REPLAY, pingen);
-            sendBroadcast(intentReplay);
+            double pingverdi = ping(hostAddress);
+            Intent intentReply = new Intent(BRODCAST_PING_ID);
+            intentReply.putExtra(PING_REPLY, pingverdi);
+            sendBroadcast(intentReply);
+            Toast.makeText(getApplicationContext(), "Broadcast til main, intent m ping adresse", Toast.LENGTH_LONG).show();
+
 
         } catch (IOException e) {
             e.printStackTrace();

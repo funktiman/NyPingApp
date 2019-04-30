@@ -5,20 +5,31 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+import static com.example.nypingapp.MainActivity.fileout;
 
 public class Main2Activity extends AppCompatActivity {
 
     public static String logFileString ="";
     public TextView textStatusen;
     public ScrollView scrollviewen;
+
+
+    public static FileOutputStream fileout2;
+    public static OutputStreamWriter outputWriter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +79,49 @@ public class Main2Activity extends AppCompatActivity {
         finish();
 
     }
+
+    public void btnClearLog(View view){
+        String TAG = "clearLog";
+
+
+        try{
+
+            File file = this.getFilesDir();
+            file = new File(file, MainActivity.filename);
+            FileWriter fw = new FileWriter(file);
+            fw.write("");
+            fw.flush();
+            fw.close();
+
+
+        } catch (IOException e) {
+            Toast.makeText(getApplicationContext(), "Exception"+ "File clear failed: " + e.toString(), Toast.LENGTH_LONG).show();
+
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+    public void WriteToFile(String logEventText) {
+
+        // add-write text into file
+        try {
+            fileout2=openFileOutput("logfile.txt", MODE_PRIVATE);
+            outputWriter2=new OutputStreamWriter(fileout);
+            outputWriter2.append(logEventText);
+            outputWriter2.close();
+
+            //display file saved message
+            Toast.makeText(getBaseContext(), "Log saved to file successfully!",
+                    Toast.LENGTH_SHORT).show();
+
+        }
+        catch (IOException e) {
+            Toast.makeText(getApplicationContext(), "Exception"+ "File write failed: " + e.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+     */
 
     public void ReadLog() {
         //reading text from file
